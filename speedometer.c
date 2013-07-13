@@ -5,6 +5,8 @@
 #include "uart.h"
 #include "sevenseg.h"
 
+static FILE mystdin = FDEV_SETUP_STREAM(uartSendByte, uartGetByte, _FDEV_SETUP_RW);
+
 volatile uint8_t count = 0;
 
 /*display values*/
@@ -12,11 +14,9 @@ uint8_t digit = 0;
 uint8_t digit_0 = 0;
 uint8_t digit_1 = 0;
 
-/*executed 250 times per second*/
+/*executed 60 times per second*/
 void tick()
 {
-  
-
   /*update display*/
   digit = update_display
   (
@@ -28,6 +28,11 @@ void tick()
 
 int main()
 {
+
+  stdin  = & mystdin;
+  stdout = & mystdin;
+  stderr = & mystdin;
+
   /*Initialise*/
   sevensegInit();
   timerInit();
@@ -40,6 +45,7 @@ int main()
   timerAttach(TIMER1OVERFLOW_INT, tick);
 
   uartSetBaudRate(9600);
+  printf("hello world\n");
 
   digit_0 = 9;
   digit_1 = 9;

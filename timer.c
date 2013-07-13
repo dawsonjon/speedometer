@@ -374,7 +374,7 @@ void timer1PWMBSet(u16 pwmDuty)
 }
 
 //! Interrupt handler for tcnt0 overflow interrupt
-TIMER_INTERRUPT_HANDLER(TIM0_OVF_vect)
+TIMER_INTERRUPT_HANDLER(TIMER0_OVF_vect)
 {
 	Timer0Reg0++;			// increment low-order counter
 
@@ -387,7 +387,7 @@ TIMER_INTERRUPT_HANDLER(TIM0_OVF_vect)
 }
 
 //! Interrupt handler for tcnt1 overflow interrupt
-TIMER_INTERRUPT_HANDLER(TIM1_OVF_vect)
+TIMER_INTERRUPT_HANDLER(TIMER1_OVF_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OVERFLOW_INT])
@@ -396,7 +396,7 @@ TIMER_INTERRUPT_HANDLER(TIM1_OVF_vect)
 
 #ifdef TCNT2	// support timer2 only if it exists
 //! Interrupt handler for tcnt2 overflow interrupt
-TIMER_INTERRUPT_HANDLER(TIM2_OVF_vect)
+TIMER_INTERRUPT_HANDLER(TIMER2_OVF_vect)
 {
 	Timer2Reg0++;			// increment low-order counter
 
@@ -418,7 +418,7 @@ TIMER_INTERRUPT_HANDLER(TIMER0_COMP_vect)
 #endif
 
 //! Interrupt handler for CutputCompare1A match (OC1A) interrupt
-TIMER_INTERRUPT_HANDLER(TIMER1_CMPA_vect)
+TIMER_INTERRUPT_HANDLER(TIMER1_COMPA_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OUTCOMPAREA_INT])
@@ -426,7 +426,7 @@ TIMER_INTERRUPT_HANDLER(TIMER1_CMPA_vect)
 }
 
 //! Interrupt handler for OutputCompare1B match (OC1B) interrupt
-TIMER_INTERRUPT_HANDLER(TIMER1_CMPB_vect)
+TIMER_INTERRUPT_HANDLER(TIMER1_COMPB_vect)
 {
 	// if a user function is defined, execute it
 	if(TimerIntFunc[TIMER1OUTCOMPAREB_INT])

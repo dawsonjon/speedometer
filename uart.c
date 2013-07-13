@@ -33,8 +33,8 @@ unsigned short uartRxOverflow;		///< receive overflow counter
 #ifndef UART_BUFFERS_EXTERNAL_RAM
 	// using internal ram,
 	// automatically allocate space in ram for each buffer
-	static char uartRxData[UART_RX_BUFFER_SIZE];
-	static char uartTxData[UART_TX_BUFFER_SIZE];
+	static unsigned char uartRxData[UART_RX_BUFFER_SIZE];
+	static unsigned char uartTxData[UART_TX_BUFFER_SIZE];
 #endif
 
 typedef void (*voidFuncPtru08)(unsigned char);
@@ -227,7 +227,7 @@ u08 uartSendBuffer(char *buffer, u16 nBytes)
 }
 */
 // UART Transmit Complete Interrupt Handler
-UART_INTERRUPT_HANDLER(UART_TX_vect)
+UART_INTERRUPT_HANDLER(USART_TXC_vect)
 {
 	// check if buffered tx is enabled
 	if(uartBufferedTx)
@@ -255,7 +255,7 @@ UART_INTERRUPT_HANDLER(UART_TX_vect)
 }
 
 // UART Receive Complete Interrupt Handler
-UART_INTERRUPT_HANDLER(UART_RX_vect)
+UART_INTERRUPT_HANDLER(USART_RXC_vect)
 {
 	u08 c;
 	
