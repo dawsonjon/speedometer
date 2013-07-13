@@ -1,0 +1,3 @@
+sudo uisp -dprog=dapa -dpart=ATmega16 --wr_fuse_l=0xff
+sudo uisp -dprog=dapa -dpart=ATmega16 --wr_fuse_h=0xc9
+sudo uisp -dprog=dapa -dpart=ATmega16 --rd_fuses
