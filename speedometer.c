@@ -10,6 +10,7 @@ static FILE mystdin = FDEV_SETUP_STREAM(uartSendByte, uartGetByte, _FDEV_SETUP_R
 volatile uint8_t count = 0;
 
 /*display values*/
+uint8_t waiting = 1;
 uint8_t digit = 0;
 uint8_t digit_0 = 0;
 uint8_t digit_1 = 0;
@@ -33,7 +34,7 @@ int main()
   stdout = & mystdin;
   stderr = & mystdin;
 
-  int speed;
+  double speed;
 
   /*Initialise*/
   sevensegInit();
@@ -51,11 +52,25 @@ int main()
   while(1)
   {
 
-	  scanf("%u", &speed);
-	  printf("speed: %2u mph\r\n", speed);
+	  scanf("%f", &speed);
+	  printf("speed: %f  mph\r\n", speed);
 
-	  for(digit_0=0; speed > 10; speed-=10) digit_0++;
-	  digit_1 = speed;
+	  if (speed > 99.0)
+	  {
+		  digit_0 = 9;
+		  digit_1 = 9;
+	  }
+	  else if (speed < 0.0)
+	  {
+		  digit_0 = 0;
+		  digit_1 = 0;
+	  }
+	  else
+          {
+		  speed += 0.5; //rounding
+		  for(digit_0=0; speed >= 10.0; speed-=10.0) digit_0++;
+		  for(digit_1=0; speed >= 1.0; speed-=1.0) digit_1++;
+	  }
   }
   return 0;
 }

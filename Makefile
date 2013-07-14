@@ -10,7 +10,7 @@ speedometer.hex : speedometer.out
 	$(OBJCOPY) -R .eeprom -O ihex speedometer.out speedometer.hex 
 
 speedometer.out : speedometer.o sevenseg.o timer.o uart.o buffer.o
-	$(CC) $(CFLAGS) -o speedometer.out -Wl,-u,vfprintf -lprintf_flt -lm speedometer.o sevenseg.o timer.o uart.o buffer.o
+	$(CC) $(CFLAGS) -o speedometer.out -Wl,-u,vfprintf -lprintf_flt -lm -Wl,-u,vfscanf -lscanf_flt -lm speedometer.o sevenseg.o timer.o uart.o buffer.o
 
 speedometer.o : speedometer.c
 	$(CC) $(CFLAGS) -Os -c speedometer.c
