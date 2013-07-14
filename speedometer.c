@@ -14,7 +14,7 @@ uint8_t digit = 0;
 uint8_t digit_0 = 0;
 uint8_t digit_1 = 0;
 
-/*executed 60 times per second*/
+/*executed 244 times per second*/
 void tick()
 {
   /*update display*/
@@ -39,7 +39,7 @@ int main()
   uartInit();
 
   /*set division to 1 */
-  timer1SetPrescaler(TIMER_CLK_DIV1024);
+  timer1SetPrescaler(TIMER_CLK_DIV1);
 
   /*attach timer 1 compare match interrupt to tick function*/
   timerAttach(TIMER1OVERFLOW_INT, tick);
