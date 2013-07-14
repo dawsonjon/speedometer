@@ -33,6 +33,8 @@ int main()
   stdout = & mystdin;
   stderr = & mystdin;
 
+  int speed;
+
   /*Initialise*/
   sevensegInit();
   timerInit();
@@ -45,10 +47,15 @@ int main()
   timerAttach(TIMER1OVERFLOW_INT, tick);
 
   uartSetBaudRate(9600);
-  printf("hello world\n");
 
-  digit_0 = 9;
-  digit_1 = 9;
-  while(1);
+  while(1)
+  {
+
+	  scanf("%u", &speed);
+	  printf("speed: %2u mph\r\n", speed);
+
+	  for(digit_0=0; speed > 10; speed-=10) digit_0++;
+	  digit_1 = speed;
+  }
   return 0;
 }

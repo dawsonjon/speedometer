@@ -125,10 +125,9 @@ void uartSendByte(u08 txData)
 int uartGetByte(void)
 {
 	u08 c;
-	if(uartReceiveByte(&c))
-		return c;
-	else
-		return -1;
+	//implement blocking read
+	while(!uartReceiveByte(&c));
+	return c;
 }
 
 // gets a byte (if available) from the uart receive buffer
