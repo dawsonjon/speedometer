@@ -54,7 +54,7 @@ ref designation description
 Circuit
 =======
 
-.. image:: circuit.svg
+.. image:: http://raw.github.com/dawsonjon/speedometer/master/circuit.svg
 
 
 An Atmel AVR ATMEGA16 forms the basis of this project. The 16PU part is
@@ -75,21 +75,32 @@ MOSFET to avoid damage to the pins. The 10A MOSFET is pretty exessive, but they
 may be driven directly from an IO pin, and I had several available in my junk
 box.
 
-A GPS module is used to form the speed sensor. At first I had considered using a hall sensor attached to the propshaft, but GPS modules turn out to be cheap and easy.
+A GPS module is used to form the speed sensor. At first I had considered using
+a hall sensor attached to the propshaft, but GPS modules turn out to be cheap
+and easy.
 
 Firmware
 ========
 
 Again the firmware is pretty simple.
 
-The timer and UART drivers are taken from `AVR lib <http://www.procyonengineering.com/embedded/avr/avrlib/>`_. The source code needed to be modified to use a newer naming convention for interupt events. The UART code also needed some modification to make reads from the UART blocking.
+The timer and UART drivers are taken from `AVR lib
+<http://www.procyonengineering.com/embedded/avr/avrlib/>`_. The source code
+needed to be modified to use a newer naming convention for interupt events. The
+UART code also needed some modification to make reads from the UART blocking.
 
 The application is divided into:
  
-+ seven_segment.c - Seven segment display driver
-+ speed.c - Extract a speed in km/h from nmea messages from the GPS module.
-+ speedometer.c - The main application.
++ seven_segment.c - Seven segment display driver + speed.c - Extract a speed in
+  km/h from nmea messages from the GPS module.  + speedometer.c - The main
+  application.
 
-The main application reads the speed from the GPS module, and converts to mph. A safety factor of 6% is added to the indicated speed. This is because the GPS module gives the speed in a horizontal direction, which would cause the speedometer to under read. A 6% safety factor more than compensates for the effect of a 1 in 3 gradient. I consider a 1 in 3 gradient to be the steepest slope that a car is likely to encounter.
+The main application reads the speed from the GPS module, and converts to mph.
+A safety factor of 6% is added to the indicated speed. This is because the GPS
+module gives the speed in a horizontal direction, which would cause the
+speedometer to under read. A 6% safety factor more than compensates for the
+effect of a 1 in 3 gradient. I consider a 1 in 3 gradient to be the steepest
+slope that a car is likely to encounter.
 
-When the device powers up, a flashing pattern is displayed to indicate that a speed has not yet been recieved. This could take as long as 30 seconds.
+When the device powers up, a flashing pattern is displayed to indicate that a
+speed has not yet been recieved. This could take as long as 30 seconds.
