@@ -54,7 +54,7 @@ ref designation description
 Circuit
 =======
 
-.. image:: http://raw.github.com/dawsonjon/speedometer/master/circuit.png
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/circuit.png
 
 
 An Atmel AVR ATMEGA16 forms the basis of this project. The 16PU part is
