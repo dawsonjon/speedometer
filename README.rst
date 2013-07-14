@@ -56,11 +56,10 @@ Circuit
 
 .. image:: https://raw.github.com/dawsonjon/speedometer/master/circuit.png
 
-
 An Atmel AVR ATMEGA16 forms the basis of this project. The 16PU part is
-available as a 40 pin DIP allowing easy prototyping using stripboard. The
+available as a 40 pin DIP allowing easy prototyping using strip-board. The
 microcontroller setup is about as minimal as you can get, using a 16 MHz
-crystal as a clock, and a pullup resistor for the reset.
+crystal as a clock, and a pull-up resistor for the reset.
 
 Programming is achieved using a 40 pin DIP test clip, connected to a PC
 parallel port.
@@ -71,13 +70,15 @@ the display from low current 3mm LEDs, using 3 LEDs in series to form each
 segment. Since the LEDs are connected in series, there is no need for a current
 limiting resistor. The IO pins on the ATMEGA16 seem to be capable of powering a
 single segment, but the common anode (driving up to 7 segments) uses a power
-MOSFET to avoid damage to the pins. The 10A MOSFET is pretty exessive, but they
+MOSFET to avoid damage to the pins. The 10A MOSFET is pretty excessive, but they
 may be driven directly from an IO pin, and I had several available in my junk
 box.
 
 A GPS module is used to form the speed sensor. At first I had considered using
-a hall sensor attached to the propshaft, but GPS modules turn out to be cheap
+a hall sensor attached to the prop-shaft, but GPS modules turn out to be cheap
 and easy.
+
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/hardware.jpg
 
 Firmware
 ========
@@ -86,14 +87,14 @@ Again the firmware is pretty simple.
 
 The timer and UART drivers are taken from `AVR lib
 <http://www.procyonengineering.com/embedded/avr/avrlib/>`_. The source code
-needed to be modified to use a newer naming convention for interupt events. The
+needed to be modified to use a newer naming convention for interrupt events. The
 UART code also needed some modification to make reads from the UART blocking.
 
 The application is divided into:
  
-+ seven_segment.c - Seven segment display driver + speed.c - Extract a speed in
-  km/h from nmea messages from the GPS module.  + speedometer.c - The main
-  application.
++ seven_segment.c - Seven segment display driver 
++ speed.c - Extract a speed in km/h from NMEA messages from the GPS module.  
++ speedometer.c - The main application.
 
 The main application reads the speed from the GPS module, and converts to mph.
 A safety factor of 6% is added to the indicated speed. This is because the GPS
@@ -103,4 +104,4 @@ effect of a 1 in 3 gradient. I consider a 1 in 3 gradient to be the steepest
 slope that a car is likely to encounter.
 
 When the device powers up, a flashing pattern is displayed to indicate that a
-speed has not yet been recieved. This could take as long as 30 seconds.
+speed has not yet been received. This could take as long as 30 seconds.
