@@ -69,8 +69,8 @@ Since the ready made displays I had available were rather too small, I formed
 the display from low current 3mm LEDs, using 3 LEDs in series to form each
 segment. Since the LEDs are connected in series, there is no need for a current
 limiting resistor. The IO pins on the ATMEGA16 seem to be capable of powering a
-single segment, but the common anode (driving up to 7 segments) uses a power
-MOSFET to avoid damage to the pins. The 10A MOSFET is pretty excessive, but they
+single segment, but the common cathode (driving up to 7 segments) uses a power
+MOSFET to avoid damage to the pins. The 10A MOSFET is overkill, but they
 may be driven directly from an IO pin, and I had several available in my junk
 box.
 
