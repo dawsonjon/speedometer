@@ -8,7 +8,7 @@
 
 static FILE mystdin = FDEV_SETUP_STREAM(uartSendByte, uartGetByte, _FDEV_SETUP_RW);
 
-volatile uint8_t count = 0;
+volatile uint16_t count = 0;
 
 /*display values*/
 uint8_t waiting = 1;
@@ -17,8 +17,9 @@ uint8_t digit_0 = 0;
 uint8_t digit_1 = 0;
 
 /*executed 244 times per second*/
-void tick()
+void update()
 {
+
   /*update display*/
   digit = update_display
   (
@@ -26,6 +27,13 @@ void tick()
     digit_0,
     digit_1
   );
+}
+
+/*executed 244 times per second*/
+void flash()
+{
+  if (count == 640) count = 0; else count ++;
+  digit = update_display(digit, count>>6, count>>6);
 }
 
 int main()
@@ -42,11 +50,9 @@ int main()
   timerInit();
   uartInit();
 
-  /*set division to 1 */
+  /*Start LED flash task*/
   timer1SetPrescaler(TIMER_CLK_DIV1);
-
-  /*attach timer 1 compare match interrupt to tick function*/
-  timerAttach(TIMER1OVERFLOW_INT, tick);
+  timerAttach(TIMER1OVERFLOW_INT, flash);
 
   uartSetBaudRate(9600);
 
@@ -56,11 +62,17 @@ int main()
 
 	  speed = get_speed_kph();
 
+          /* When first message is displayed,
+	     stop flashing and start updating the display*/
+	  timer1SetPrescaler(TIMER_CLK_DIV1);
+	  timerDetach(TIMER1OVERFLOW_INT);
+	  timerAttach(TIMER1OVERFLOW_INT, update);
+
           /* Convert to mph */
 
 	  speed *= 0.621371192;
 
-	  /* 5% safety factor */
+	  /* 6% safety factor */
 
           /*Think that gps velocity is much more acurate than this. However
 	    the GPS reports the horizontal velocity. If you are going up or
@@ -68,9 +80,9 @@ int main()
 
             I have taken 1:3 gradient as being the steepest hill that
 	    is likely to be encountered. On this slope, the vehicle will be 
-	    travelling 5.4% faster than the speedometer
-	    is reading. To allow for this, I have added a safety factor of
-	    6% so that the speedometer does not under read. 
+	    travelling 5.4% faster than the speedometer is reading. To allow 
+	    for this, I have added a safety factor of 6% so that the speedometer
+	    does not under read. 
 
             This is still within the acceptable accuracy for a speedometer
 	    which according top ECE regulation 39 section 5.3 must be::

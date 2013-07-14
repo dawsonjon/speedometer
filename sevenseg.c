@@ -21,6 +21,11 @@ void sevensegInit(void){
   SEGMENT_G_PORT |= (1 << SEGMENT_G_PIN);
 }
 
+void display_off(){
+  DIGIT_A_PORT &= ~(1 << DIGIT_A_PIN);
+  DIGIT_B_PORT &= ~(1 << DIGIT_B_PIN);
+}
+
 void sevensegSetDigit(uint8_t i)
 {
   switch(i)

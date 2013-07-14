@@ -14,4 +14,6 @@ uint8_t update_display(uint8_t digit,
                     uint8_t digit_0,
                     uint8_t digit_1);
 
+void display_off();
+
 #endif
