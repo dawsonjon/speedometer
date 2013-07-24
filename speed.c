@@ -4,26 +4,27 @@
 double get_speed_kph(){
   double speed;
 
-  /* Wait for a course and speed accross ground message */
+  /* Wait for Recomended Minimum Content*/
   while(1){
-    if(getchar() != '$') break;
-    if(getchar() != 'G') break;
-    if(getchar() != 'P') break;
-    if(getchar() != 'V') break;
-    if(getchar() != 'T') break;
-    if(getchar() != 'G') break;
+    if(getchar() != '$') continue;
+    if(getchar() != 'G') continue;
+    if(getchar() != 'P') continue;
+    if(getchar() != 'R') continue;
+    if(getchar() != 'M') continue;
+    if(getchar() != 'C') continue;
+    break;
   }
 
   /* Extract the speed, but ignore the rest */
   while(getchar() != ',');
-  while(getchar() != ',');//Direction,
-  while(getchar() != ',');//T,
-  while(getchar() != ',');//Direction,
-  while(getchar() != ',');//M,
-  while(getchar() != ',');//Speed(knots),
-  while(getchar() != ',');//N,
+  while(getchar() != ',');//time,
+  while(getchar() != ',');//A,
+  while(getchar() != ',');//latidude,
+  while(getchar() != ',');//N/S,
+  while(getchar() != ',');//longitude,
+  while(getchar() != ',');//E/W,
   scanf("%f", &speed);
-  printf("gps speed kph: %f\r\n", speed);
+  printf("gps speed knots: %f\r\n", speed);
 
   return speed;
 }

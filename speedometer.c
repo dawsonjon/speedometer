@@ -56,6 +56,8 @@ int main()
 
   uartSetBaudRate(9600);
 
+  printf("GPS Speedometer - Jonathan P Dawson 2013-06-23\r\n");
+
   while(1)
   {
 	  /* Obtain speed in kph */
@@ -70,7 +72,7 @@ int main()
 
           /* Convert to mph */
 
-	  speed *= 0.621371192;
+	  speed *= 1.15077945;
 
 	  /* 6% safety factor */
 
