@@ -122,7 +122,7 @@ characters. The display only has space for 8 user defined characters, so it
 takes a bit of imagination to find a set that will form all the digits from
 0-9. The new LCD display was wired into the existing circuit.
 
-.. image:: https://raw.github.com/dawsonjon/speedometer/master/circuit.png
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/circuit_lcd.png
 
 The two digits for the speed use up the first 6 columns of the display. The
 display could have been extended to three digits to allow for higher speeds, or
