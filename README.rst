@@ -112,7 +112,7 @@ LCD Version
 
 The initial tests of the speedometer proved to be a little disappointing. The
 speedometer seemed to work well, but the readout was almost impossible to read
-in bright sunshine. 
+in bright sunshine. A replacement display was needed.
 
 A 16x4 character LCD display was chosen. A back-lit display was chosen so that
 it could be read in the dark and in bright sunshine. I chose a green LCD
