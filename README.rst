@@ -58,7 +58,7 @@ Circuit
 
 An Atmel AVR ATMEGA16 forms the basis of this project. The 16PU part is
 available as a 40 pin DIP allowing easy prototyping using strip-board. The
-microcontroller setup is about as minimal as you can get, using a 16 MHz
+Microcontroller setup is about as minimal as you can get, using a 16 MHz
 crystal as a clock, and a pull-up resistor for the reset.
 
 Programming is achieved using a 40 pin DIP test clip, connected to a PC
@@ -105,3 +105,36 @@ slope that a car is likely to encounter.
 
 When the device powers up, a flashing pattern is displayed to indicate that a
 speed has not yet been received. This could take as long as 30 seconds.
+
+LCD Version
+===========
+
+
+The initial tests of the speedometer proved to be a little disappointing. The
+speedometer seemed to work well, but the readout was almost impossible to read
+in bright sunshine. 
+
+A 16x4 character LCD display was chosen. A back-lit display was chosen so that
+it could be read in the dark and in bright sunshine. I chose a green LCD
+because I liked the colour, red and blue ones are also available!  A 4 row LCD
+allows the large numerals to be formed by grouping together user defined
+characters. The display only has space for 8 user defined characters, so it
+takes a bit of imagination to find a set that will form all the digits from
+0-9. The new LCD display was wired into the existing circuit.
+
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/circuit.png
+
+The two digits for the speed use up the first 6 columns of the display. The
+display could have been extended to three digits to allow for higher speeds, or
+a kph representation. For my purposes, two digits is quite adequate, and this
+leaves another 10 x 4characters to play with.
+
+Of all the information that can be extracted from the GPS, I decided that the
+date and time were the most useful. The date and time require a little
+manipulation, since the GPS provides the time in UTC. To allow for daylight
+saving (British Summer Time), I added a function to work out from the time of
+year whether GMT or BST should be used. This required a function that
+calculates the day of the week, since the clocks change on the last Sunday of
+March and October. After working out whether to add an hour, a check is
+performed to see whether the date does not need to change (which could
+happen in the hour before midnight).

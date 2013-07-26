@@ -3,7 +3,7 @@
 
 double speed;
 int hour, utc_hour , minute, second;
-int day, utc_day, month, year;
+int day, utc_day, month, utc_month, year;
 char good;
 
 /*These functions return the date, time and GPS status*/
@@ -88,22 +88,26 @@ void adjust_daylight_saving()
       if(utc_day == days_in_month[month-1])
       {
         day = 1;
+	month = utc_month + 1;
       }
       else
       {
         day = utc_day;
+	month = utc_month;
       }
     }
     else
     {
       hour = utc_hour + 1;
       day = utc_day;
+      month = utc_month;
     }
   }
   else
   {
     hour = utc_hour;
     day = utc_day;
+    month = utc_month;
   }
 }
 
@@ -142,12 +146,12 @@ double get_speed_knots(){
   scanf("%f", &speed);
   while(getchar() != ',');//speed in knots,
   while(getchar() != ',');//course made good,
-  scanf("%2u%2u%2u", &utc_day, &month, &year);
+  scanf("%2u%2u%2u", &utc_day, &utc_month, &year);
   while(getchar() != ',');//date,
 
   /*send to UART for debug*/
   printf("GPS speed knots: %f\r\n", speed);
-  printf("date (utc): %2u-%2u-%2u\r\n", utc_day, month, year);
+  printf("date (utc): %2u-%2u-%2u\r\n", utc_day, utc_month, year);
   printf("time (utc): %2u:%2u:%2u\r\n", utc_hour, minute, second);
 
   /*adjust for daylight saving*/
