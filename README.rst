@@ -136,7 +136,7 @@ saving (British Summer Time), I added a function to work out from the time of
 year whether GMT or BST should be used. This required a function that
 calculates the day of the week, since the clocks change on the last Sunday of
 March and October. After working out whether to add an hour, a check is
-performed to see whether the date does not need to change (which could
+performed to see if the date needs to change (which could
 happen in the hour before midnight).
 
 
