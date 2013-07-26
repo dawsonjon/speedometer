@@ -6,6 +6,8 @@ int hour, utc_hour , minute, second;
 int day, utc_day, month, year;
 char good;
 
+/*These functions return the date, time and GPS status*/
+
 int get_year(){return year;}
 int get_month(){return month;}
 int get_day(){return day;}
@@ -15,6 +17,10 @@ int get_second(){return second;}
 int get_gps_good(){return good;}
 
 
+/*
+ * This function calculates the day of the week.
+ *
+ */
 
 int day_of_week(int y, int m, int d)
 {
@@ -22,6 +28,12 @@ int day_of_week(int y, int m, int d)
        y -= m < 3;
        return (y + y/4 - y/100 + y/400 + t[m-1] + d) % 7;
 }
+
+/*
+ * This function determines whether we are in BST or GMT
+ * based on the time of year.
+ *
+ */
 
 int is_bst(){
   int i, last_sunday_in_october, last_sunday_in_march;
@@ -54,6 +66,13 @@ int is_bst(){
   return 1;
 
 }
+
+/* 
+*
+* this function decides whether to adjust the day and hour
+* for daylight saving time.
+*
+*/
 
 void adjust_daylight_saving()
 {
@@ -88,7 +107,16 @@ void adjust_daylight_saving()
   }
 }
 
+/* 
+* This function reads thwe data from the gps module
+* and extracts the information that we need.
+* After this function has been called, the day and date
+* functions may also be called.
+*
+*/
+
 double get_speed_knots(){
+
 
   /* Wait for Recomended Minimum Content*/
   while(1){

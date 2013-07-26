@@ -25,12 +25,13 @@ int main()
   /*Initialise*/
   timerInit();
   uartInit();
-
+  lcdInit();
   uartSetBaudRate(9600);
 
+  /*Print Debug Text*/
   printf("GPS Speedometer - Jonathan P Dawson 2013-06-26\r\n");
-  lcdInit();
 
+  /*Main application loop*/
   while(1)
   {
 	  /* Obtain speed in knots */
@@ -82,6 +83,7 @@ int main()
 		  for(digit_0=0; speed >= 10.0; speed-=10.0) digit_0++;
 		  for(digit_1=0; speed >= 1.0; speed-=1.0) digit_1++;
 	  }
+
 	  /*Display speed in large numbers*/
 	  big_num(0, digit_0);
 	  big_num(3, digit_1);
@@ -94,7 +96,7 @@ int main()
 
 	  /*Display date*/
 	  lcd_position(0x08);
-	  sprintf(buffer, "%02u-%02u-%02u", get_year(), get_month(), get_day());
+	  sprintf(buffer, "%02u-%02u-%02u", get_day(), get_month(), get_year());
 	  lcd_print(buffer);
 
 	  /*Display time*/
@@ -102,8 +104,19 @@ int main()
 	  sprintf(buffer, "%02u:%02u:%02u", get_hour(), get_minute(), get_second());
 	  lcd_print(buffer);
 
+          /*display daylight saving time*/
+	  lcd_position(0x1D);
+          if(is_bst())
+          {
+	    lcd_print("BST");
+          }
+	  else
+	  {
+	    lcd_print("GMT");
+	  }
+
           /*check gps quality*/
-	  lcd_position(0x18);
+	  lcd_position(0x5F);
 	  lcd_write(get_gps_good());
   }
   return 0;
