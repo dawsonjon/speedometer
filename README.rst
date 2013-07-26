@@ -140,4 +140,4 @@ performed to see whether the date does not need to change (which could
 happen in the hour before midnight).
 
 
-.. image:: https://raw.github.com/dawsonjon/speedometer/master/lcd_readout.png
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/lcd_readout.jpg
