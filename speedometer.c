@@ -1,40 +1,13 @@
 #include <avr/io.h>
+#define F_CPU 16000000UL
+#include <util/delay.h>
 #include <stdio.h>
 
-#include "timer.h"
 #include "uart.h"
-#include "sevenseg.h"
-#include "speed.h"
+#include "lcd.h"
+#include "gps.h"
 
 static FILE mystdin = FDEV_SETUP_STREAM(uartSendByte, uartGetByte, _FDEV_SETUP_RW);
-
-volatile uint16_t count = 0;
-
-/*display values*/
-uint8_t waiting = 1;
-uint8_t digit = 0;
-uint8_t digit_0 = 0;
-uint8_t digit_1 = 0;
-
-/*executed 244 times per second*/
-void update()
-{
-
-  /*update display*/
-  digit = update_display
-  (
-    digit,
-    digit_0,
-    digit_1
-  );
-}
-
-/*executed 244 times per second*/
-void flash()
-{
-  if (count == 640) count = 0; else count ++;
-  digit = update_display(digit, count>>6, count>>6);
-}
 
 int main()
 {
@@ -44,31 +17,25 @@ int main()
   stderr = & mystdin;
 
   double speed;
+  char buffer [9];
+  int digit_0;
+  int digit_1;
+  int i;
 
   /*Initialise*/
-  sevensegInit();
   timerInit();
   uartInit();
 
-  /*Start LED flash task*/
-  timer1SetPrescaler(TIMER_CLK_DIV1);
-  timerAttach(TIMER1OVERFLOW_INT, flash);
-
   uartSetBaudRate(9600);
 
-  printf("GPS Speedometer - Jonathan P Dawson 2013-06-23\r\n");
+  printf("GPS Speedometer - Jonathan P Dawson 2013-06-26\r\n");
+  lcdInit();
 
   while(1)
   {
-	  /* Obtain speed in kph */
+	  /* Obtain speed in knots */
 
-	  speed = get_speed_kph();
-
-          /* When first message is displayed,
-	     stop flashing and start updating the display*/
-	  timer1SetPrescaler(TIMER_CLK_DIV1);
-	  timerDetach(TIMER1OVERFLOW_INT);
-	  timerAttach(TIMER1OVERFLOW_INT, update);
+	  speed = get_speed_knots();
 
           /* Convert to mph */
 
@@ -111,10 +78,33 @@ int main()
 	  }
 	  else
           {
-		  speed += 0.5; //rounding
+		  //speed += 0.5; //rounding
 		  for(digit_0=0; speed >= 10.0; speed-=10.0) digit_0++;
 		  for(digit_1=0; speed >= 1.0; speed-=1.0) digit_1++;
 	  }
+	  /*Display speed in large numbers*/
+	  big_num(0, digit_0);
+	  big_num(3, digit_1);
+	  lcd_position(0x56);
+
+	  /*Display speed units*/
+	  lcd_write('m');
+	  lcd_write('/');
+	  lcd_write('h');
+
+	  /*Display date*/
+	  lcd_position(0x08);
+	  sprintf(buffer, "%02u-%02u-%02u", get_year(), get_month(), get_day());
+	  lcd_print(buffer);
+
+	  /*Display time*/
+	  lcd_position(0x48);
+	  sprintf(buffer, "%02u:%02u:%02u", get_hour(), get_minute(), get_second());
+	  lcd_print(buffer);
+
+          /*check gps quality*/
+	  lcd_position(0x18);
+	  lcd_write(get_gps_good());
   }
   return 0;
 }

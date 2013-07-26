@@ -9,14 +9,14 @@ all: speedometer.hex
 speedometer.hex : speedometer.out 
 	$(OBJCOPY) -R .eeprom -O ihex speedometer.out speedometer.hex 
 
-speedometer.out : speedometer.o sevenseg.o timer.o uart.o buffer.o speed.o
-	$(CC) $(CFLAGS) -o speedometer.out -Wl,-u,vfprintf -lprintf_flt -lm -Wl,-u,vfscanf -lscanf_flt -lm speedometer.o sevenseg.o timer.o uart.o buffer.o speed.o
+speedometer.out : speedometer.o lcd.o timer.o uart.o buffer.o gps.o
+	$(CC) $(CFLAGS) -o speedometer.out -Wl,-u,vfprintf -lprintf_flt -lm -Wl,-u,vfscanf -lscanf_flt -lm speedometer.o lcd.o timer.o uart.o buffer.o gps.o
 
 speedometer.o : speedometer.c
 	$(CC) $(CFLAGS) -Os -c speedometer.c
 
-sevenseg.o : sevenseg.c sevenseg.h
-	$(CC) $(CFLAGS) -Os -c sevenseg.c
+lcd.o : lcd.c lcd.h
+	$(CC) $(CFLAGS) -Os -c lcd.c
 
 uart.o : uart.c uart.h
 	$(CC) $(CFLAGS) -Os -c uart.c
@@ -27,8 +27,8 @@ timer.o : timer.c timer.h
 buffer.o : buffer.c buffer.h
 	$(CC) $(CFLAGS) -Os -c buffer.c
 
-speed.o : speed.c speed.h
-	$(CC) $(CFLAGS) -Os -c speed.c
+gps.o : gps.c gps.h
+	$(CC) $(CFLAGS) -Os -c gps.c
 
 # erase the AVR before it is programmed
 load: speedometer.hex
