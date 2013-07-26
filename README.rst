@@ -138,3 +138,6 @@ calculates the day of the week, since the clocks change on the last Sunday of
 March and October. After working out whether to add an hour, a check is
 performed to see whether the date does not need to change (which could
 happen in the hour before midnight).
+
+
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/lcd_readout.png
