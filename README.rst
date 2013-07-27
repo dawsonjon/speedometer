@@ -127,7 +127,7 @@ takes a bit of imagination to find a set that will form all the digits from
 The two digits for the speed use up the first 6 columns of the display. The
 display could have been extended to three digits to allow for higher speeds, or
 a kph representation. For my purposes, two digits is quite adequate, and this
-leaves another 10 x 4characters to play with.
+leaves another 10 x 4 characters to play with.
 
 Of all the information that can be extracted from the GPS, I decided that the
 date and time were the most useful. The date and time require a little
@@ -141,3 +141,14 @@ happen in the hour before midnight).
 
 
 .. image:: https://raw.github.com/dawsonjon/speedometer/master/lcd_readout.jpg
+
+To keep all the bits together, I went for a simple ABS enclosure. To power the
+microcontroller, I found a cheap car phone charger. The guts of the charger
+make an economical power supply. The charger makes use of a switched mode
+regulator which is much more efficient than a 7812 linear regulator.
+
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/assembled.jpg
+
+The finished unit:
+
+.. image:: https://raw.github.com/dawsonjon/speedometer/master/boxed.jpg
