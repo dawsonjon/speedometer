@@ -92,7 +92,7 @@ void adjust_daylight_saving()
       }
       else
       {
-        day = utc_day;
+        day = utc_day + 1;
 	month = utc_month;
       }
     }
