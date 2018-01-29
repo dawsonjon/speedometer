@@ -46,7 +46,7 @@ int is_bst(){
 
   /*Find last Sunday of October*/
   for(i=31; i>=1; i--){
-    if(day_of_week(year + 2000, 3, i) == 0) break;
+    if(day_of_week(year + 2000, 10, i) == 0) break;
   }
   last_sunday_in_october = i;
 
