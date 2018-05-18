@@ -1,4 +1,5 @@
 #include <avr/io.h>
+#include <avr/wdt.h>
 #define F_CPU 16000000UL
 #include <util/delay.h>
 #include <stdio.h>
@@ -27,6 +28,7 @@ int main()
   uartInit();
   lcdInit();
   uartSetBaudRate(9600);
+  wdt_enable(WDTO_2S);
 
   /*Print Debug Text*/
   printf("GPS Speedometer - Jonathan P Dawson 2013-06-26\r\n");
@@ -118,6 +120,7 @@ int main()
           /*check gps quality*/
 	  lcd_position(0x5F);
 	  lcd_write(get_gps_good());
+      wdt_reset();
   }
   return 0;
 }
